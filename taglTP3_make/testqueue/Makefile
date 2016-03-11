@@ -4,8 +4,9 @@ LDFLAGS= -lpthread
 EXEC= moduleLib queue_test test
 SRC= $(wildcard *.c)
 OBJ= $(SRC:.c=.o)
+
 NB_THREAD= 5
-TEST= sleeplock
+TEST= sleeping_lock
 
 all: $(EXEC)
 
@@ -25,8 +26,11 @@ main.o: queue.h
 test:
 	./queue_test $(NB_THREAD) $(TEST)
 
+path: 
+	export LD_LIBRARY_PATH=lock_implementation:$LD_LIBRARY_PATH
+
 clean:
-	rm -rf *.o $(EXEC)
+	rm -rf *.o $(EXEC) *.gch
 	@cd lock_implementation ; \
 	make -f Makefile clean; \
 	cd ..
